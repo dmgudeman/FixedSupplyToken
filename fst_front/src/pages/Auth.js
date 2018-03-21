@@ -1,30 +1,44 @@
 import React, {Component} from 'react';
-import { Link, Route } from 'react-router-dom';
-import Transfer from './Transfer';
-import { transfer2 } from './transfer2';
-import { test } from './test';
-
+import { Input, Button } from 'antd';
 
 class Auth extends Component {
+    state = {
+        mnemonic: '1',
+        accountNumber: ''
+    }
+
+    handleMnemonic = async (event) => {
+        await this.setState({mnemonic: event.target.value});
+        await console.log("this.state.mnemonic", this.state.mnemonic)
+
+    }
+    handleAccountNumber = async (event) => {
+        await this.setState({accountNumber: event.target.value});
+        await console.log("this.state.accountNumber", this.state.accountNumber)
+
+    }
+
     render() {
         return (
             <div>
-                <h1>Auth Page</h1>
-                <nav>
-                    <ul>
-                        {/*<li><Link to='/'>Auth</Link></li>*/}
-                        <li><Link to='/transfer'>Transfer</Link></li>
+                <div style={{marginLeft: 20}}><h1>Auth Page</h1></div>
+                <div style={{ marginBottom: 16 }}>
+                    <Input
+                        defaultValue={this.state.mnemonic}
+                        addonBefore="12 word mnemonic"
+                        style={{ width: "50%", marginLeft:20 }}
+                        onChange={this.handleMnemonic}
+                     />
+                </div>
+                <div style={{ marginBottom: 16 }}>
+                <Input
+                    addonBefore="Your account number"
+                    defaultValue={this.state.accountNumber}
+                    style={{ width: "50%", marginLeft:20 }}
+                    onChange={this.handleAccountNumber}
+                />
+            </div>
 
-                        <li><Link to='/test'>test</Link></li>
-                        <li><Link to='/transfer2'>Transfer2</Link></li>
-
-                    </ul>
-                    {/*<Route exact path="/" component={Auth}/>*/}
-                    <Route path="/transfer" component={Transfer}/>
-                    <Route path="/test" component={test}/>
-                    <Route path="/transfer2" component={transfer2}/>
-
-                </nav>
             </div>
         )
     }
