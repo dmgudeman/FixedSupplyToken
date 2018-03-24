@@ -3,14 +3,14 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { Link, Route, withRouter } from 'react-router-dom';
 import Transfer from "./Transfer";
 
-const Button1 = withRouter(({ history }) => (
-    <Button
-        type="primary"
-        onClick={() => { history.push({pathname: '/transfer', state:{mnemonic: this}}) }}
-    >
-        Click Me!
-    </Button>
-))
+// const Button1 = withRouter(({ history }) => (
+//     <Button
+//         type="primary"
+//         onClick={() => { this.check(); history.push({pathname: '/transfer', state:{mnemonic: this}}) }}
+//     >
+//         Click Me!
+//     </Button>
+// ))
 
 const formItemLayout = {
     labelCol: { span: 4 },
@@ -23,6 +23,8 @@ const formTailLayout = {
 class DynamicRule extends Component {
     state = {
         checkNick: true,
+        mnemonic: '',
+        numnuts: 3
     };
     componentWillMount(){
         console.log("CWM numnuts", this.props.numnuts);
@@ -30,12 +32,19 @@ class DynamicRule extends Component {
     }
     check = () => {
         this.props.form.validateFields(
-            (err) => {
+            async (err) => {
                 if (!err) {
-                    console.log("this.props", this.props);
-                    console.log("this.props.context", this.props.context)
-                    console.log("this.props.form.getFieldsValue().mnenonic", this.props.form.getFieldsValue().mnemonic)
-                    console.info('success');
+                  await  console.log("this.props", this.props);
+                    await console.log("this.props.context", this.props.context);
+                    await  console.log("this.props.form.getFieldsValue().mnemonic", this.props.form.getFieldsValue().mnemonic);
+                    let x = await this.props.form.getFieldsValue().mnemonic;
+                    await console.log(" xxxxxxxxxxxxxxxx ", x);
+                    await  this.setState({mnemonic: this.props.form.getFieldsValue().mnemonic});
+
+                    await  console.log("this.state.mnemonic", this.state.mnemonic)
+
+                    await  console.info('success');
+                    await  this.props.history.push({pathname: '/transfer', mnemonic:this.state.mnemonic})
                 }
             },
         );
@@ -76,10 +85,10 @@ class DynamicRule extends Component {
                 </Form.Item>
 
                 <Form.Item {...formTailLayout}>
-                    <Button1
+                    <Button
 
-                        onClick={() => { this.check}}>
-                    </Button1>
+                        onClick={ this.check}>
+                    </Button>
                 </Form.Item>
             </div>
 

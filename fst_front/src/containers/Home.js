@@ -19,17 +19,21 @@ const routes = [
 
 
 class Home extends Component {
+    componentWillMount() {
+        console.log("Home CWM this.props", this.props);
+    }
     render() {
         return (
             <div>
                 <nav>
                     <ul>
+                        <li><Link exact to='/'>Auth3</Link></li>
                         <li><Link to='/auth'>Auth</Link></li>
+                        <li><Link to='/auth3'>Auth3</Link></li>
                         <li><Link to='/transfer'>Transfer</Link></li>
                         <li><Link to='/test'>test</Link></li>
                         <li><Link to='/transfer2'>Transfer2</Link></li>
                         <li><Link to='/auth2'>Auth2</Link></li>
-                        <li><Link to='/auth3'>Auth3</Link></li>
                     </ul>
                     {/*<Route exact path="/auth" component={Auth}/>*/}
                     {/*<Route path="/transfer" component={Transfer}/>*/}

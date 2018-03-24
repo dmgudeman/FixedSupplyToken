@@ -40,6 +40,10 @@ class Transfer extends Component {
     // Get network provider and web3 instance.
     // See utils/getWeb3 for more info.
 
+      console.log("Transfer CWM this.props", this.props);
+      console.log("Transfer CWM this.props.mnenomic", this.props.nmenoic);
+      console.log("cccccc", this.props.history.location.mnemonic)
+
     getWeb3
       .then(results => {
         console.log("CWM results.web3", results.web3);
@@ -70,7 +74,7 @@ class Transfer extends Component {
     freeExchange.setProvider(this.state.web3.currentProvider);
 
     this.state.web3.eth.getCoinbase(function(error, results){
-      console.log(results);
+      console.log("this.state.web3.eth.getCoinbase", results);
       freeExchange.defaults({from: results})
     });
 

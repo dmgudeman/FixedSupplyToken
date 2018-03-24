@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import Home from './pages/Home';
+import Home from './containers/Home';
 import { BrowserRouter } from 'react-router-dom';
 
 const App = () => (
-    <BrowserRouter keyLength={12}>
+    <BrowserRouter>
         <div className='app'>
-            <Home/>
+            <Home />
         </div>
     </BrowserRouter>
 );

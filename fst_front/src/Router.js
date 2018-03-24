@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Router, Route} from 'react-router';
-import Transfer from './pages/Transfer';
-import Auth from './pages/Auth';
+import Transfer from './containers/Transfer';
+import Auth from './containers/Auth';
 
 class Router extends Component {
     render () {
