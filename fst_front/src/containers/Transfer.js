@@ -35,7 +35,6 @@ class Transfer extends Component {
     this.onSubmitGV = this.onSubmitGV.bind(this);
     this.onSubmit= this.onSubmit.bind(this);
   }
-
   componentWillMount() {
     // Get network provider and web3 instance.
     // See utils/getWeb3 for more info.
@@ -44,10 +43,10 @@ class Transfer extends Component {
       console.log("Transfer CWM this.props.mnenomic", this.props.nmenoic);
       console.log("cccccc", this.props.history.location.mnemonic)
 
-    getWeb3
+    getWeb3(this.props.history.location.mnemonic)
       .then(results => {
-        console.log("CWM results.web3", results.web3);
-        console.log("CWM results.web3.version", results.web3.version);
+        console.log("Transfer CWM results.web3", results.web3);
+        console.log("Transfer CWM results.web3.version", results.web3.version);
 
         this.setState({web3: results.web3})
 
@@ -60,6 +59,7 @@ class Transfer extends Component {
     })
   }
 
+
   instantiateContract() {
     /*
      * SMART CONTRACT EXAMPLE
@@ -67,14 +67,25 @@ class Transfer extends Component {
      * Normally these functions would be called in the context of a
      * state management library, but for convenience I've placed them here.
      */
+    console.log("instantiateContract has been called")
     const contract = require('truffle-contract');
+
     const freeExchange = contract(FreeExchangeContract);
-    this.setState({defaultAccount: this.state.web3.currentProvider.address});
 
+      let x = this.state.web3.eth.getAccounts(function(error, result)
+      {
+          console.log("this.state.web3.eth.getAccounts", result);
+          return result;
+      });
     freeExchange.setProvider(this.state.web3.currentProvider);
+    this.setState({defaultAccount: this.state.web3.eth.getAccounts()});
+    console.log("Transfer initiateContract defaultAccount", this.state.defaultAccount)
 
-    this.state.web3.eth.getCoinbase(function(error, results){
-      console.log("this.state.web3.eth.getCoinbase", results);
+
+
+    this.state.web3.eth.getCoinbase(function(error, results) {
+        console.log("this.state.web3.eth.getCoinbase", results);
+
       freeExchange.defaults({from: results})
     });
 
