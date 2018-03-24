@@ -86,8 +86,9 @@ class DynamicRule extends Component {
 
                 <Form.Item {...formTailLayout}>
                     <Button
-
+                        type="primary"
                         onClick={ this.check}>
+                    Go To Transfer
                     </Button>
                 </Form.Item>
             </div>
