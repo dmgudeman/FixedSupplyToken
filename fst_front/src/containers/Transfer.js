@@ -46,7 +46,7 @@ class Transfer extends Component {
     // See utils/getWeb3 for more info.
 
       console.log("Transfer CWM this.props", this.props);
-      console.log("Transfer CWM this.props.mnenomic", this.props.nmenoic);
+      console.log("Transfer CWM this.props.mnenomic", this.props.mnemonic);
       console.log("Transfer CWM this.props.history.location.mnemonic", this.props.history.location.mnemonic)
 
     getWeb3(this.props.history.location.mnemonic)
@@ -85,10 +85,20 @@ class Transfer extends Component {
         if(error) {
             console.log("xxxxxxxeth.getCoinbase error ", error)
         } else {
+            // this.state.web3.personal.unlockAccount(results, "1056Patricia", 500);
+            // web3.personal.unlockAccount("(account address)", "(pass phrase)", 500);
             this.setState({defaultAddress: results});
             console.log("yyyyyyyyythis.state.defaultAddress", this.state.defaultAddress);
         }
     });
+    this.state.web3.eth.getCoinbase((error, results)=>{
+        console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrresults", results)
+        this.state.web3.personal.unlockAccount(results, (error, data)=>{
+            console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrresults", results)
+            return results;
+        })
+
+    })
 
 
     freeExchange.deployed().then((instance) => {
