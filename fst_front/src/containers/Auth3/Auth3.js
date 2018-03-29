@@ -1,16 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { Link, Route, withRouter } from 'react-router-dom';
-import Transfer from "./Transfer";
-
-// const Button1 = withRouter(({ history }) => (
-//     <Button
-//         type="primary"
-//         onClick={() => { this.check(); history.push({pathname: '/transfer', state:{mnemonic: this}}) }}
-//     >
-//         Click Me!
-//     </Button>
-// ))
+import { Form, Input, Button} from 'antd';
 
 const formItemLayout = {
     labelCol: { span: 4 },
@@ -26,25 +15,17 @@ class DynamicRule extends Component {
         mnemonic: '',
         numnuts: 3
     };
-    componentWillMount(){
-        console.log("CWM numnuts", this.props.numnuts);
-        console.log("CWM this.props.history", this.props.history)
-    }
+    // componentWillMount(){
+    //     console.log("Auth3 CWM numnuts", this.props.numnuts);
+    //     console.log("Auth3 CWM this.props.history", this.props.history)
+    // }
     check = () => {
         this.props.form.validateFields(
-            async (err) => {
+            (err) => {
                 if (!err) {
-                  await  console.log("this.props", this.props);
-                    await console.log("this.props.context", this.props.context);
-                    await  console.log("this.props.form.getFieldsValue().mnemonic", this.props.form.getFieldsValue().mnemonic);
-                    let x = await this.props.form.getFieldsValue().mnemonic;
-                    await console.log(" xxxxxxxxxxxxxxxx ", x);
-                    await  this.setState({mnemonic: this.props.form.getFieldsValue().mnemonic});
-
-                    await  console.log("this.state.mnemonic", this.state.mnemonic)
-
-                    await  console.info('success');
-                    await  this.props.history.push({pathname: '/transfer', mnemonic:this.state.mnemonic})
+                    this.props.form.getFieldsValue().mnemonic;
+                    console.info('Auth3 check success');
+                    this.props.history.push({pathname: '/transfer', mnemonic:this.state.mnemonic})
                 }
             },
         );

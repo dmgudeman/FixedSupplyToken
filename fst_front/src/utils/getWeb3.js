@@ -1,14 +1,16 @@
 import Web3 from 'web3';
 var HDWalletProvider = require("truffle-hdwallet-provider");
 
-// var mnemonic = "emerge call strategy naive remove grunt example sport burden ceiling tide loud";
+ // let mnemonic = "emerge call strategy naive remove grunt example sport burden ceiling tide loud";
+ let mnemonic = "best mutual diary human quick agree nose humor please toe erosion response"
 
-let getWeb3 = (mnemonic) => {
-    console.log("getWeb3 mnemonichhhhhhhhhhhhhhhhh", mnemonic)
+let getWeb3 = () => {
+    console.log("first line getWeb3 mnemonic", mnemonic)
     const provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/WCDTmDbf8qzgqQS9qYdT" );
-    return new Promise(function (resolve, reject) {
+    console.log("first line getWeb3 provider", provider);
+    let y =  new Promise(function (resolve, reject) {
         // Wait for loading completion to avoid race conditions with web3 injection timing.
-        window.addEventListener('load', function () {
+        // window.addEventListener('load', function () {
             var results
             var web3 = window.web3
 
@@ -40,8 +42,11 @@ let getWeb3 = (mnemonic) => {
 
                 resolve(results)
             }
-        })
+        // }
+        // )
     })
+    console.log("getWeb3 return y ", y);
+    return y;
 }
 
 

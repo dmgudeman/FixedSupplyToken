@@ -19,11 +19,17 @@ class Transfer extends Component {
       fieldTransferAmount: '',
       fieldTransferToAddress: '',
       freeExchangeInstance: '',
-      defaultAccount: '',
+
+      defaultAddress: '',
+      defaultBalance: '',
+
       transferToAddress: '',
       transferToBalance: '',
+
       ownerAddress: '',
       ownerBalance: '',
+      ownerBalanceEther: '',
+
       formMessage: '',
       formMessageGV: '',
       globalVariable: ''
@@ -41,7 +47,7 @@ class Transfer extends Component {
 
       console.log("Transfer CWM this.props", this.props);
       console.log("Transfer CWM this.props.mnenomic", this.props.nmenoic);
-      console.log("cccccc", this.props.history.location.mnemonic)
+      console.log("Transfer CWM this.props.history.location.mnemonic", this.props.history.location.mnemonic)
 
     getWeb3(this.props.history.location.mnemonic)
       .then(results => {
@@ -67,55 +73,65 @@ class Transfer extends Component {
      * Normally these functions would be called in the context of a
      * state management library, but for convenience I've placed them here.
      */
-    console.log("instantiateContract has been called")
+
     const contract = require('truffle-contract');
 
     const freeExchange = contract(FreeExchangeContract);
-
-      let x = this.state.web3.eth.getAccounts(function(error, result)
-      {
-          console.log("this.state.web3.eth.getAccounts", result);
-          return result;
-      });
     freeExchange.setProvider(this.state.web3.currentProvider);
-    this.setState({defaultAccount: this.state.web3.eth.getAccounts()});
-    console.log("Transfer initiateContract defaultAccount", this.state.defaultAccount)
+    console.log("Transfer initiateContract this.state.web3", this.state.web3.currentProvider)
+    console.log("Trasnsfer instantiateContract freeExchange", freeExchange);
 
-
-
-    this.state.web3.eth.getCoinbase(function(error, results) {
-        console.log("this.state.web3.eth.getCoinbase", results);
-
-      freeExchange.defaults({from: results})
+    this.state.web3.eth.getCoinbase((error, results) => {
+        if(error) {
+            console.log("xxxxxxxeth.getCoinbase error ", error)
+        } else {
+            this.setState({defaultAddress: results});
+            console.log("yyyyyyyyythis.state.defaultAddress", this.state.defaultAddress);
+        }
     });
+
 
     freeExchange.deployed().then((instance) => {
       this.setState({freeExchangeInstance: instance});
+          instance.totalSupply().then(result => {
+              let y = new BigNumber(result).valueOf();
+              console.log("Transfer instantiateContract deployed instance.totalSupply()", y)
+          });
 
-      instance.getGlobalVariable()
-        .then(result => {
-          let q = result ? result.c[0] : 0;
-          this.setState({globalVariable: q}); })
+          instance.owner().then(result => {
+              this.setState({ownerAddress: result});
+              instance.balanceOf(result).then(balance => {
+                  let m = new BigNumber(balance).valueOf();
+                  console.log("ballllllance", m);
+                  this.setState({ownerBalance: m});
+                  return m;
+              })
+              console.log("Transfer instance token balance", instance.balanceOf(result))
+              console.log("this.state.ownerAddress", this.state.ownerAddress);
+              this.state.web3.eth.getBalance(result, (error, data)=> {
+                  let k = new BigNumber(data).valueOf();
+                        console.log("Transfer balance of owner", k)
+                  let l = this.state.web3.fromWei(k, "ether")
+                  console.log("Transfer balance of owner", l)
+                  this.setState({ownerBalanceEther: l});
+              });
 
-      this.state.freeExchangeInstance.balanceOf(this.state.defaultAccount)
-        .then((result) => {
-          let r = new BigNumber(result).valueOf();
-          return r; })
-        .then((result) => {
-          this.setState({ownerBalance: result});
-          return this.state;})
+          })
 
-      this.state.freeExchangeInstance.owner()
-        .then((result) => {
-          this.setState({ownerAddress: result});
-          return this.state;});
+          instance.balanceOf(this.state.defaultAddress)
+              .then(balance => {
+                  let m = new BigNumber(balance).valueOf();
+                  console.log("getAccountsmmmmmmmmmmmmmmmmmmmmm", m)
+                  this.setState({defaultBalance: m});
+                  return m;
+              })
+              .then(result=> {console.log("qqqqqqqqqqqqqqqqqqqq", result)})
 
       return this.state;
     })
   }
 
   handleChange(event) {
-
     event.preventDefault()
     console.log("event", event.target.value)
     this.setState({fieldTransferAmount: event.target.value})
@@ -198,8 +214,10 @@ class Transfer extends Component {
         </nav>
         <main className="container">
           <h2>YOUR DATA</h2>
-          <h4>Your address is: {this.state.ownerAddress}</h4>
-          <h4>Tokens you own: {this.state.ownerBalance}</h4>
+          <h4>Your address is: {this.state.defaultAddress}</h4>
+          <h4>Tokens you own: {this.state.defaultBalance}</h4>
+          <h4>The contract owner address is: {this.state.ownerAddress}</h4>
+          <h4>Tokens owned by owner: {this.state.ownerBalance}</h4>
           <hr/>
           <hr/>
           <form onSubmit={this.onSubmit}>

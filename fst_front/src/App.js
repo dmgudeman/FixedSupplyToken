@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Home from './containers/Home';
+import Home from './containers/NavBar';
 import { BrowserRouter } from 'react-router-dom';
 
 const App = () => (

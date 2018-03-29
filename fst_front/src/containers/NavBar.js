@@ -3,7 +3,7 @@ import { Link, Route,  } from 'react-router-dom';
 import Transfer from './Transfer';
 import Auth from './Auth';
 import { WrappedHorizontalLoginForm }  from './Auth2';
-import { WrappedDynamicRule } from './Auth3'
+import { WrappedDynamicRule } from './Auth3/Auth3'
 import { transfer2 } from './transfer2';
 import { test } from './test';
 
@@ -27,13 +27,13 @@ class Home extends Component {
             <div>
                 <nav>
                     <ul>
-                        <li><Link exact to='/'>Auth3</Link></li>
-                        <li><Link to='/auth'>Auth</Link></li>
+                        {/*<li><Link exact to='/'>Auth3</Link></li>*/}
+                        {/*<li><Link to='/auth'>Auth</Link></li>*/}
                         <li><Link to='/auth3'>Auth3</Link></li>
-                        <li><Link to='/transfer'>Transfer</Link></li>
-                        <li><Link to='/test'>test</Link></li>
-                        <li><Link to='/transfer2'>Transfer2</Link></li>
-                        <li><Link to='/auth2'>Auth2</Link></li>
+                        {/*<li><Link to='/transfer'>Transfer</Link></li>*/}
+                        {/*<li><Link to='/test'>test</Link></li>*/}
+                        {/*<li><Link to='/transfer2'>Transfer2</Link></li>*/}
+                        {/*<li><Link to='/auth2'>Auth2</Link></li>*/}
                     </ul>
                     {/*<Route exact path="/auth" component={Auth}/>*/}
                     {/*<Route path="/transfer" component={Transfer}/>*/}
@@ -44,7 +44,8 @@ class Home extends Component {
                     {routes.map(({path, component: C}) => (
                        <Route
                            path={path}
-                           render={(props) => <C {...props}/>}
+                           render={(props) => <C {...props} numnuts={3}/>}
+
                        />
                     )) }
 
