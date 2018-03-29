@@ -110,7 +110,7 @@ class Transfer extends Component {
               console.log("this.state.ownerAddress", this.state.ownerAddress);
               this.state.web3.eth.getBalance(result, (error, data)=> {
                   let k = new BigNumber(data).valueOf();
-                        console.log("Transfer balance of owner", k)
+                  console.log("Transfer balance of owner", k)
                   let l = this.state.web3.fromWei(k, "ether")
                   console.log("Transfer balance of owner", l)
                   this.setState({ownerBalanceEther: l});
@@ -125,7 +125,7 @@ class Transfer extends Component {
                   this.setState({defaultBalance: m});
                   return m;
               })
-              .then(result=> {console.log("qqqqqqqqqqqqqqqqqqqq", result)})
+              .then(result=> {console.log("defaultBalance", result)})
 
       return this.state;
     })

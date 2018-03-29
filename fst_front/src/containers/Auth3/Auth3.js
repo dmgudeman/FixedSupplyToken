@@ -23,9 +23,10 @@ class DynamicRule extends Component {
         this.props.form.validateFields(
             (err) => {
                 if (!err) {
-                    this.props.form.getFieldsValue().mnemonic;
-                    console.info('Auth3 check success');
-                    this.props.history.push({pathname: '/transfer', mnemonic:this.state.mnemonic})
+                    let k = this.props.form.getFieldsValue().mnemonic;
+                    
+                    console.info('Auth3 check success menmonic =', k);
+                    this.props.history.push({pathname: '/transfer', mnemonic:k})
                 }
             },
         );
